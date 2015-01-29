@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  height: 1
+  weight: 1
+  gender: 1
+
+two:
+  height: 1
+  weight: 1
+  gender: 1
