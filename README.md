@@ -21,4 +21,4 @@ And navigate to ```http://localhost:3000```.
 
 To add a new person to train the classifier, click **Add New Person to Train Classifier**.
 
-Once your training data has been added, click **Get Gender Prediction** to input height, weight values (as integers) and get an instant prediction.
+Once at least ONE male and ONE female are added, gender prediction is unlocked. Click **Get Gender Prediction** to input height, weight values (as integers) and get an instant prediction.
