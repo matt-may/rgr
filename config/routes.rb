@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :predictions
+  resources :predictions, except: [:edit, :update]
 
   resources :people
 

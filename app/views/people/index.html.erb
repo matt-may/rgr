@@ -1,4 +1,4 @@
-<h1>Listing people</h1>
+<h1>All People</h1>
 
 <table>
   <thead>
@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to 'New Person', new_person_path %>
+<%= link_to 'Add New Person to Train Classifier', new_person_path %><br><br>
+
+Already added people to train the classifier? <%= link_to 'Get Gender Prediction', new_prediction_path %>
