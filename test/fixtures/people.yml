@@ -1,5 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+# Genders: {"male"=>0, "female"=>1}
 one:
   height: 1
   weight: 1
