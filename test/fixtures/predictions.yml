@@ -1,11 +1,43 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+#gender,height,weight
+#male,600,180
+#male,592,190
+#male,558,170
+#male,592,165
+#female,500,100
+#female,550,150
+#female,542,130
+#female,575,150
+
 one:
-  height: 1
-  weight: 1
-  result: MyString
+  height: 600
+  weight: 180
 
 two:
-  height: 1
-  weight: 1
-  result: MyString
+  height: 592
+  weight: 180
+
+three:
+  height: 558
+  weight: 170
+
+four:
+  height: 592
+  weight: 165
+
+five:
+  height: 500
+  weight: 100
+
+six:
+  height: 550
+  weight: 150
+
+seven:
+  height: 542
+  weight: 130
+
+eight:
+  height: 575
+  weight: 150

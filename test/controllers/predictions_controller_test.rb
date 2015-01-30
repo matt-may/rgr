@@ -18,25 +18,32 @@ class PredictionsControllerTest < ActionController::TestCase
 
   test "should create prediction" do
     assert_difference('Prediction.count') do
-      post :create, prediction: { height: @prediction.height, result: @prediction.result, weight: @prediction.weight }
+      post :create, prediction: { height: @prediction.height, weight: @prediction.weight }
     end
 
     assert_redirected_to prediction_path(assigns(:prediction))
   end
 
+  test "should make correct prediction -> male" do
+    assert_difference('Prediction.count') do
+      post :create, prediction: { height: @prediction.height, weight: @prediction.weight }
+    end
+
+    assert_equal 'male', assigns(:prediction).result
+  end
+
+  test "should make correct prediction -> female" do
+    prediction = predictions(:five)
+    assert_difference('Prediction.count') do
+      post :create, prediction: { height: prediction.height, weight: prediction.weight }
+    end
+
+    assert_equal 'female', assigns(:prediction).result
+  end
+
   test "should show prediction" do
     get :show, id: @prediction
     assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @prediction
-    assert_response :success
-  end
-
-  test "should update prediction" do
-    patch :update, id: @prediction, prediction: { height: @prediction.height, result: @prediction.result, weight: @prediction.weight }
-    assert_redirected_to prediction_path(assigns(:prediction))
   end
 
   test "should destroy prediction" do
