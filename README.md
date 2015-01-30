@@ -10,7 +10,7 @@ To use the application, first ```git clone``` the repository to your local machi
 
 Once in the directory, install all the required gems and create your database:
 ```
-$bundle install; rake db:migrate;
+$ bundle install; rake db:migrate;
 ```
 Start the rails server:
 ```
