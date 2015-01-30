@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Height:</strong>
+  <%= @prediction.height %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @prediction.weight %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @prediction.result %>
+</p>
+
+<%= link_to 'Edit', edit_prediction_path(@prediction) %> |
+<%= link_to 'Back', predictions_path %>
