@@ -30,11 +30,11 @@
 
 <br>
 
-<% if @people.empty? %>
-Unlock Gender Prediction:
+<% if empty? %>
+<p>Instructions: Add at least ONE male and ONE female to unlock the gender predictor.</p>
 <% end %>
 <%= link_to 'Add New Person to Train Classifier', new_person_path %><br><br>
 
-<% unless @people.empty? %>
+<% unless empty? %>
 <%= link_to 'Get Gender Prediction', new_prediction_path %>
 <% end %>
