@@ -13,7 +13,7 @@ class ClassifierTest < ActiveSupport::TestCase
       data[row[:gender]] << [row[:height], row[:weight]]
     end
 
-    @classifier = BayesClassifier.new data, 2
+    @classifier = BayesClassifier::Classifier.new data, 2
   end
 
   test 'feature set is properly returned' do

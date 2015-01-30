@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<h3>This person is predicted to be a <%= @prediction.result %>.</h3>
+
 <p>
   <strong>Height:</strong>
   <%= @prediction.height %>
@@ -8,11 +10,6 @@
 <p>
   <strong>Weight:</strong>
   <%= @prediction.weight %>
-</p>
-
-<p>
-  <strong>Result:</strong>
-  <%= @prediction.result %>
 </p>
 
 <%= link_to 'Edit', edit_prediction_path(@prediction) %> |

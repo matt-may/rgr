@@ -1,3 +1,4 @@
+require 'classifier'
 class PredictionsController < ApplicationController
   before_action :set_prediction, only: [:show, :edit, :update, :destroy]
 
@@ -17,10 +18,6 @@ class PredictionsController < ApplicationController
     @prediction = Prediction.new
   end
 
-  # GET /predictions/1/edit
-  def edit
-  end
-
   # POST /predictions
   # POST /predictions.json
   def create
@@ -28,6 +25,7 @@ class PredictionsController < ApplicationController
 
     respond_to do |format|
       if @prediction.save
+        make_prediction
         format.html { redirect_to @prediction, notice: 'Prediction was successfully created.' }
         format.json { render :show, status: :created, location: @prediction }
       else
@@ -70,5 +68,13 @@ class PredictionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def prediction_params
       params.require(:prediction).permit(:height, :weight, :result)
+    end
+
+    def make_prediction
+      t = BayesClassifier::Trainer.new
+      classifier = t.train
+      result = classifier.classify([@prediction.height, @prediction.weight])
+      @prediction.result = result
+      @prediction.save
     end
 end
