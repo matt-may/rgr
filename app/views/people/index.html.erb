@@ -1,5 +1,6 @@
 <h1>All People</h1>
 
+<% unless @people.empty? %>
 <table>
   <thead>
     <tr>
@@ -23,9 +24,17 @@
     <% end %>
   </tbody>
 </table>
+<% else %>
+    <p>No people yet.</p>
+<% end %>
 
 <br>
 
+<% if @people.empty? %>
+Unlock Gender Prediction:
+<% end %>
 <%= link_to 'Add New Person to Train Classifier', new_person_path %><br><br>
 
-Already added people to train the classifier? <%= link_to 'Get Gender Prediction', new_prediction_path %>
+<% unless @people.empty? %>
+<%= link_to 'Get Gender Prediction', new_prediction_path %>
+<% end %>
