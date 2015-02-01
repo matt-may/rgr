@@ -7,8 +7,7 @@ namespace :training_data do
     raise 'A JSON training file must be given as an argument' unless args[:file]
 
     file = File.expand_path(args[:file])
-    params = %w|height weight gender|
-    import = Import::PeopleImport.new(file, 'people', *params)
+    import = Import::PeopleImport.new(file)
     result = import.result
 
     puts result

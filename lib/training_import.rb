@@ -12,16 +12,16 @@ module Import
       @data = JSON.parse(file)
     end
 
-    # Sanitizes input
-    def sanitize
-      lambda { |val| ActiveRecord::Base::sanitize(val) }
-    end
-
     # Proc that multiples the value by 100 if its numeric;
     # else just returns the value. Useful for converting floats
     # into ints, since our height & weight are Integer columns
     def times_100
-      lambda { |val| val.is_a?(Numeric) ? val*100 : val }
+      lambda { |val| val.is_a?(Numeric) ? (val*100).round : val }
+    end
+
+    # Replaces nil values with null
+    def replace_nil
+      lambda { |val| val.nil? ? 'NULL' : val }
     end
 
     private
@@ -43,10 +43,9 @@ module Import
   end
 
   class PeopleImport < TrainingImport
-    # Specify a file, model name, and set of params
-    def initialize(file, model, *params)
+    def initialize(file)
       super(file)
-      @params = params
+      @params = %w|height weight gender|
     end
 
     # Retrieves an array of people from our parsed data.
@@ -69,6 +68,17 @@ module Import
       "#{added} new people added to the database."
     end
 
+    # Gender is an enum, so find the correct integer and return it
+    def set_gender gender
+      case gender
+        when 'Male'
+          Person.genders[:male]
+        when 'Female'
+          Person.genders[:female]
+        else nil
+      end
+    end
+
     private
 
     # Prepare the raw SQL statements inserting people into the
@@ -78,10 +88,12 @@ module Import
 
       people.each_with_index do |person, i|
         person = person['person']
+        person['gender'] = set_gender(person['gender'])
 
-        values = person.values_at(*@params)
-        mult_by_100 = values.map(&times_100).map(&sanitize)
-        joined = mult_by_100.join(', ').downcase
+        values = person.values_at(*@params).map(&replace_nil) # Select the values at our params
+        values[0..1] = values[0..1].map(&times_100) # Multiply the height & weight by 100
+
+        joined = values.join(', ')
 
         @sql += '(' + joined + ')'
         @sql += ', ' unless i+1 == people.size
