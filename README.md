@@ -24,6 +24,10 @@ Start the rails server:
 ```
 $ rails s
 ```
+If the database is not already seeded with training data, ```cd``` to the application root directory and run:
+```
+$ rake training_data:import[data/training.json]
+```
 
 And navigate to ```http://localhost:3000```.
 
