@@ -12,6 +12,10 @@ Once in the directory, install all the required gems and create your database:
 ```
 $ bundle install; rake db:migrate;
 ```
+To ensure all tests pass:
+```
+$ rake test
+```
 Start the rails server:
 ```
 $ rails s
