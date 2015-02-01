@@ -2,9 +2,14 @@ module Import
   class TrainingImport
     # Read in our training data
     def initialize(file)
-      file = File.read(file)
-      @data = JSON.parse(file)
+      @file = file
       @count = Person.count
+    end
+
+    # Read the provided file and parse it as JSON
+    def parse
+      file = File.read(@file)
+      @data = JSON.parse(file)
     end
 
     # Sanitizes input
@@ -23,6 +28,7 @@ module Import
 
     # Prepares a SQL statement and executes it
     def seed
+      parse
       prepare_sql
       execute_sql
     end

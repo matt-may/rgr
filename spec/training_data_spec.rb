@@ -1,53 +1,52 @@
 require 'spec_helper'
+require 'rails_helper'
 require 'rake'
 require 'training_import'
 
 describe 'training_data rake task' do
   before :all do
-    # @rake = Rake::Application.new
-    # Rake.application = @rake
-    # Rake.application.rake_require "../../lib/tasks"
-    # Rake::Task.define_task(:environment)
+    @rake = Rake::Application.new
+    Rake.application = @rake
+    Classifier::Application.load_tasks
+    Rake::Task.define_task(:environment)
   end
 
   describe 'import' do
-     before do
-       #BarOutput.stub(:banner)
-       #BarOutput.stub(:puts)
+    # Training 2 contains a small subset of the data from the Gist
+    let(:valid_file) { 'training2.json' }
+    let(:invalid_file) { 'no.json' }
 
-       puts 'hello'
-     end
+    before(:each) do
+      Rake::Task['training_data:import'].reenable
+    end
 
-     let :run_rake_task do
-        Rake::Task["training_data:import"].reenable
-        Rake::Task["training_data:import[data/training2.json]"].invoke
-     end
+    let :run_rake_task do
+      Rake::Task['training_data:import'].invoke(Rails.root.join('data', valid_file))
+    end
 
-     it 'should return a string' do
-       run_rake_task
-       expect('1').to eq(result)
-     end
+    let :run_rake_task_with_invalid_file do
+      Rake::Task['training_data:import'].invoke(Rails.root.join('data', invalid_file))
+    end
+
+    # Ensure two records are added to the people table
+    it 'adds two new records to the correct table' do
+      expect { run_rake_task }.to change(Person, :count).by(2)
+    end
+
+    it 'does not raise any exceptions' do
+      expect { run_rake_task }.not_to raise_error
+    end
+
+    it 'prints a result to STDOUT' do
+      expect { run_rake_task }.to output("2 new people added to the database.\n").to_stdout
+    end
+
+    it 'raises the expected error with an invalid file' do
+      expect { run_rake_task_with_invalid_file }.to raise_error(Errno::ENOENT)
+    end
+
+    it 'alerts the user if no argument is provided' do
+      expect { Rake::Task['training_data:import'].invoke }.to raise_error(RuntimeError)
+    end
   end
-  #
-  #   let :run_rake_task do
-  #     Rake::Task["foo:bake_a_bar"].reenable
-  #     Rake.application.invoke_task "foo:bake_a_bar"
-  #   end
-  #
-  #   it "should bake a bar" do
-  #     Bar.any_instance.should_receive :bake
-  #     run_rake_task
-  #   end
-  #
-  #   it "should bake a bar again" do
-  #     Bar.any_instance.should_receive :bake
-  #     run_rake_task
-  #   end
-  #
-  #   it "should output two banners" do
-  #     BarOutput.should_receive(:banner).twice
-  #     run_rake_task
-  #   end
-  #
-  # end
 end
