@@ -16,6 +16,10 @@ To ensure all tests pass:
 ```
 $ rake test
 ```
+To verify all examples:
+```
+$ bundle exec rspec
+```
 Start the rails server:
 ```
 $ rails s
