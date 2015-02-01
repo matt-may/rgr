@@ -1,5 +1,9 @@
 <h1>All People</h1>
 
+<% unless empty? %>
+    <%= link_to 'Get Gender Prediction', new_prediction_path %><br><br>
+<% end %>
+
 <% unless @people.empty? %>
 <table>
   <thead>

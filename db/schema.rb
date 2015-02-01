@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130041358) do
+ActiveRecord::Schema.define(version: 20150201063340) do
 
   create_table "people", force: true do |t|
-    t.integer  "height"
-    t.integer  "weight"
+    t.float    "height"
+    t.float    "weight"
     t.integer  "gender"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "predictions", force: true do |t|
-    t.integer  "height"
-    t.integer  "weight"
+    t.float    "height"
+    t.float    "weight"
     t.string   "result"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -12,13 +12,6 @@ module Import
       @data = JSON.parse(file)
     end
 
-    # Proc that multiples the value by 100 if its numeric;
-    # else just returns the value. Useful for converting floats
-    # into ints, since our height & weight are Integer columns
-    def times_100
-      lambda { |val| val.is_a?(Numeric) ? (val*100).round : val }
-    end
-
     # Replaces nil values with null
     def replace_nil
       lambda { |val| val.nil? ? 'NULL' : val }
@@ -68,17 +61,6 @@ module Import
       "#{added} new people added to the database."
     end
 
-    # Gender is an enum, so find the correct integer and return it
-    def set_gender gender
-      case gender
-        when 'Male'
-          Person.genders[:male]
-        when 'Female'
-          Person.genders[:female]
-        else nil
-      end
-    end
-
     private
 
     # Prepare the raw SQL statements inserting people into the
@@ -88,11 +70,11 @@ module Import
 
       people.each_with_index do |person, i|
         person = person['person']
-        person['gender'] = set_gender(person['gender'])
+        gender = person['gender']
+        person['gender'] = Person.genders[gender.downcase]
 
-        values = person.values_at(*@params).map(&replace_nil) # Select the values at our params
-        values[0..1] = values[0..1].map(&times_100) # Multiply the height & weight by 100
-
+        # Select the values at our params
+        values = person.values_at(*@params).map(&replace_nil)
         joined = values.join(', ')
 
         @sql += '(' + joined + ')'
