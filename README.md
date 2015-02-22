@@ -16,9 +16,17 @@ To ensure all tests pass:
 ```
 $ rake test
 ```
+To verify all examples:
+```
+$ bundle exec rspec
+```
 Start the rails server:
 ```
 $ rails s
+```
+If the database is not already seeded with training data, ```cd``` to the application root directory and run:
+```
+$ rake training_data:import[data/training.json]
 ```
 
 And navigate to ```http://localhost:3000```.
