@@ -27,7 +27,7 @@ module Import
     end
 
     # Make sure to define in your subclass
-    def prepare_sql; end
+    def prepare_sql; raise "Define #prepare_sql in your subclass"; end
 
     # Executes a raw SQL statement
     def execute_sql

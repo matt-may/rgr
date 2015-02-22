@@ -40,13 +40,10 @@ module BayesClassifier
     # +class_name+:: Specified class name
     #
     def feature_set(index, class_name)
-      feature_set = []
       training_set = @data[class_name]
+      feature_set = training_set.map { |elem| elem[index] }
 
-      0.upto(training_set.length-1) do |i|
-        feature_set.push training_set[i][index]
-      end
-
+      # Give back the feature set
       feature_set
     end
 
@@ -92,15 +89,11 @@ module BayesClassifier
     # +class_name+:: Specified class name
     #
     def feature_multiply(feature_values, class_name)
-      prod = 1.0
-
-      0.upto(feature_values.length-1) do |i|
-        # Set `prod` equal to itself times the probability of the value
-        # occurring
-        prod = prod * feature_probability(feature_values[i], i, class_name)
+      prod = feature_values.each_with_index.inject(1) do |accum, (elem, iter)|
+        accum * feature_probability(elem, iter, class_name)
       end
 
-      # Return prod
+      # Return the product
       prod
     end
 
