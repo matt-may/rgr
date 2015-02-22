@@ -72,7 +72,7 @@ class PredictionsController < ApplicationController
 
     def make_prediction
       t = BayesClassifier::Trainer.new
-      classifier = t.train
+      classifier = t.trained
       result = classifier.classify([@prediction.height, @prediction.weight])
       @prediction.update(result: result)
     end

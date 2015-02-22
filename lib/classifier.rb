@@ -139,8 +139,8 @@ module BayesClassifier
       end
     end
 
-    def train
-      @classifier = BayesClassifier::Classifier.new @data, 2
+    def trained
+      BayesClassifier::Classifier.new @data, 2
     end
   end
 end
