@@ -105,8 +105,7 @@ module BayesClassifier
     # +class_name+:: Specified class name
     #
     def class_probability(feature_values, class_name)
-      frac = 1.0 / @data.size
-      prob = frac * feature_multiply(feature_values, class_name)
+      prob = feature_multiply(feature_values, class_name)
 
       # Return the probability
       prob
