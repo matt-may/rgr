@@ -28,10 +28,6 @@ module BayesClassifier
       @data.keys
     end
 
-    def size
-      classes.count
-    end
-
     # Returns an array of values that a feature takes for a particular class
     # in the training data.
     #
