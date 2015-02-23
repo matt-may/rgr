@@ -24,6 +24,7 @@ module BayesClassifier
       @dimension = dimension
     end
 
+    # Returns an array of class names from @data.
     def classes
       @data.keys
     end
